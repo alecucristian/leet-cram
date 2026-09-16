@@ -28,4 +28,6 @@ Problems are stored via `localStorage`. New problems can be imported through the
 - **Build**: `npm run build` (Vite)
 - **Dev server**: `npm run dev`
 - **Type check**: `npx tsc --noEmit`
-- **Deploy**: Vercel (auto-detects Vite)
+- **Deploy**:
+  - **GitHub Pages**: Automated via GitHub Actions (`.github/workflows/deploy.yml`) on pushes to `main`. Ensure repository Settings > Pages > Source is set to "GitHub Actions".
+  - **Vercel**: Auto-detects Vite (`base: "./"` works on both).

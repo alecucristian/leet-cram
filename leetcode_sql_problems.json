@@ -1,0 +1,4452 @@
+[
+  {
+    "id": 5001,
+    "title": "Combine Two Tables",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to report the first name, last name, city, and state of each person in the `Person` table. If the address of a `personId` is not present in the `Address` table, report `null` instead.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5002,
+    "title": "Second Highest Salary",
+    "difficulty": "Medium",
+    "description": "Write an SQL query to report the second highest salary from the `Employee` table. If there is no second highest salary, the query should report `null`.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "GROUP BY",
+          "Window Functions (e.g., RANK, DENSE_RANK)",
+          "Self Join",
+          "Subqueries"
+        ],
+        "correct": 1,
+        "explanation": "Window functions allow performing calculations across a set of table rows related to the current row without collapsing them."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 2,
+        "explanation": "Window functions requiring an ORDER BY clause (like RANK) typically take O(N log N) due to sorting."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "The database needs to store partition state in memory, leading to O(N) space complexity."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT id, val,"
+        },
+        {
+          "id": "b",
+          "code": "RANK() OVER(PARTITION BY category ORDER BY val DESC) as rnk"
+        },
+        {
+          "id": "c",
+          "code": "FROM Data;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "RANK() OVER(ORDER BY val DESC PARTITION BY category)"
+        },
+        {
+          "id": "x2",
+          "code": "GROUP BY category"
+        },
+        {
+          "id": "x3",
+          "code": "LIMIT 1"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5003,
+    "title": "Nth Highest Salary",
+    "difficulty": "Medium",
+    "description": "Write an SQL query to report the nth highest salary from the `Employee` table. If there is no nth highest salary, the query should report `null`.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "GROUP BY",
+          "Window Functions (e.g., RANK, DENSE_RANK)",
+          "Self Join",
+          "Subqueries"
+        ],
+        "correct": 1,
+        "explanation": "Window functions allow performing calculations across a set of table rows related to the current row without collapsing them."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 2,
+        "explanation": "Window functions requiring an ORDER BY clause (like RANK) typically take O(N log N) due to sorting."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "The database needs to store partition state in memory, leading to O(N) space complexity."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT id, val,"
+        },
+        {
+          "id": "b",
+          "code": "RANK() OVER(PARTITION BY category ORDER BY val DESC) as rnk"
+        },
+        {
+          "id": "c",
+          "code": "FROM Data;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "RANK() OVER(ORDER BY val DESC PARTITION BY category)"
+        },
+        {
+          "id": "x2",
+          "code": "GROUP BY category"
+        },
+        {
+          "id": "x3",
+          "code": "LIMIT 1"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5004,
+    "title": "Rank Scores",
+    "difficulty": "Medium",
+    "description": "Write an SQL query to rank the scores. The ranking should be calculated according to the following rules: The scores should be ranked from highest to lowest. If there is a tie, both should have the same ranking. After a tie, the next ranking number should be the next consecutive integer value.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "GROUP BY",
+          "Window Functions (e.g., RANK, DENSE_RANK)",
+          "Self Join",
+          "Subqueries"
+        ],
+        "correct": 1,
+        "explanation": "Window functions allow performing calculations across a set of table rows related to the current row without collapsing them."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 2,
+        "explanation": "Window functions requiring an ORDER BY clause (like RANK) typically take O(N log N) due to sorting."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "The database needs to store partition state in memory, leading to O(N) space complexity."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT id, val,"
+        },
+        {
+          "id": "b",
+          "code": "RANK() OVER(PARTITION BY category ORDER BY val DESC) as rnk"
+        },
+        {
+          "id": "c",
+          "code": "FROM Data;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "RANK() OVER(ORDER BY val DESC PARTITION BY category)"
+        },
+        {
+          "id": "x2",
+          "code": "GROUP BY category"
+        },
+        {
+          "id": "x3",
+          "code": "LIMIT 1"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5005,
+    "title": "Consecutive Numbers",
+    "difficulty": "Medium",
+    "description": "Write an SQL query to find all numbers that appear at least three times consecutively.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5006,
+    "title": "Employees Earning More Than Their Managers",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to find the employees who earn more than their managers.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5007,
+    "title": "Duplicate Emails",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to report all the duplicate emails. Note that it's guaranteed that the email field is not NULL.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Window Functions",
+          "CROSS JOIN",
+          "GROUP BY with Aggregate Functions",
+          "ORDER BY"
+        ],
+        "correct": 2,
+        "explanation": "GROUP BY allows summarizing and aggregating data (like COUNT, SUM) per category."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(N log N)",
+          "O(1)",
+          "O(N^2)",
+          "O(N)"
+        ],
+        "correct": 3,
+        "explanation": "Hash aggregation operates in O(N) expected time by hashing the grouping keys."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Space is proportional to the number of distinct groups, bounded by O(N)."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT category, COUNT(*) as cnt"
+        },
+        {
+          "id": "b",
+          "code": "FROM Items"
+        },
+        {
+          "id": "c",
+          "code": "GROUP BY category;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "ORDER BY category"
+        },
+        {
+          "id": "x2",
+          "code": "PARTITION BY category"
+        },
+        {
+          "id": "x3",
+          "code": "HAVING COUNT(*) > 0"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5008,
+    "title": "Customers Who Never Order",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to report all customers who never order anything.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5009,
+    "title": "Department Highest Salary",
+    "difficulty": "Medium",
+    "description": "Write an SQL query to find employees who have the highest salary in each of the departments.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5010,
+    "title": "Department Top Three Salaries",
+    "difficulty": "Hard",
+    "description": "Write an SQL query to find the employees who are high earners in each of the departments. A high earner in a department is an employee who has a salary in the top three unique salaries for that department.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "GROUP BY",
+          "Window Functions (e.g., RANK, DENSE_RANK)",
+          "Self Join",
+          "Subqueries"
+        ],
+        "correct": 1,
+        "explanation": "Window functions allow performing calculations across a set of table rows related to the current row without collapsing them."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 2,
+        "explanation": "Window functions requiring an ORDER BY clause (like RANK) typically take O(N log N) due to sorting."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "The database needs to store partition state in memory, leading to O(N) space complexity."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT id, val,"
+        },
+        {
+          "id": "b",
+          "code": "RANK() OVER(PARTITION BY category ORDER BY val DESC) as rnk"
+        },
+        {
+          "id": "c",
+          "code": "FROM Data;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "RANK() OVER(ORDER BY val DESC PARTITION BY category)"
+        },
+        {
+          "id": "x2",
+          "code": "GROUP BY category"
+        },
+        {
+          "id": "x3",
+          "code": "LIMIT 1"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5011,
+    "title": "Delete Duplicate Emails",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to delete all the duplicate emails, keeping only one unique email with the smallest id.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5012,
+    "title": "Rising Temperature",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to find all dates' `Id` with higher temperatures compared to its previous dates (yesterday).",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5013,
+    "title": "Trips and Users",
+    "difficulty": "Hard",
+    "description": "Write an SQL query to find the cancellation rate of requests with unbanned users (both client and driver must not be banned) each day between '2013-10-01' and '2013-10-03'. Round Cancellation Rate to two decimal points.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Window Functions",
+          "CROSS JOIN",
+          "GROUP BY with Aggregate Functions",
+          "ORDER BY"
+        ],
+        "correct": 2,
+        "explanation": "GROUP BY allows summarizing and aggregating data (like COUNT, SUM) per category."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(N log N)",
+          "O(1)",
+          "O(N^2)",
+          "O(N)"
+        ],
+        "correct": 3,
+        "explanation": "Hash aggregation operates in O(N) expected time by hashing the grouping keys."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Space is proportional to the number of distinct groups, bounded by O(N)."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT category, COUNT(*) as cnt"
+        },
+        {
+          "id": "b",
+          "code": "FROM Items"
+        },
+        {
+          "id": "c",
+          "code": "GROUP BY category;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "ORDER BY category"
+        },
+        {
+          "id": "x2",
+          "code": "PARTITION BY category"
+        },
+        {
+          "id": "x3",
+          "code": "HAVING COUNT(*) > 0"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5014,
+    "title": "Game Play Analysis I",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to report the first login date for each player.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Window Functions",
+          "CROSS JOIN",
+          "GROUP BY with Aggregate Functions",
+          "ORDER BY"
+        ],
+        "correct": 2,
+        "explanation": "GROUP BY allows summarizing and aggregating data (like COUNT, SUM) per category."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(N log N)",
+          "O(1)",
+          "O(N^2)",
+          "O(N)"
+        ],
+        "correct": 3,
+        "explanation": "Hash aggregation operates in O(N) expected time by hashing the grouping keys."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Space is proportional to the number of distinct groups, bounded by O(N)."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT category, COUNT(*) as cnt"
+        },
+        {
+          "id": "b",
+          "code": "FROM Items"
+        },
+        {
+          "id": "c",
+          "code": "GROUP BY category;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "ORDER BY category"
+        },
+        {
+          "id": "x2",
+          "code": "PARTITION BY category"
+        },
+        {
+          "id": "x3",
+          "code": "HAVING COUNT(*) > 0"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5015,
+    "title": "Game Play Analysis II",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to report the device that is first logged in for each player.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5016,
+    "title": "Game Play Analysis III",
+    "difficulty": "Medium",
+    "description": "Write an SQL query to report for each player and date, how many games played so far by the player. That is, the total number of games played by the player until that date.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "GROUP BY",
+          "Window Functions (e.g., RANK, DENSE_RANK)",
+          "Self Join",
+          "Subqueries"
+        ],
+        "correct": 1,
+        "explanation": "Window functions allow performing calculations across a set of table rows related to the current row without collapsing them."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 2,
+        "explanation": "Window functions requiring an ORDER BY clause (like RANK) typically take O(N log N) due to sorting."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "The database needs to store partition state in memory, leading to O(N) space complexity."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT id, val,"
+        },
+        {
+          "id": "b",
+          "code": "RANK() OVER(PARTITION BY category ORDER BY val DESC) as rnk"
+        },
+        {
+          "id": "c",
+          "code": "FROM Data;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "RANK() OVER(ORDER BY val DESC PARTITION BY category)"
+        },
+        {
+          "id": "x2",
+          "code": "GROUP BY category"
+        },
+        {
+          "id": "x3",
+          "code": "LIMIT 1"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5017,
+    "title": "Game Play Analysis IV",
+    "difficulty": "Medium",
+    "description": "Write an SQL query to report the fraction of players that logged in again on the day after the day they first logged in, rounded to 2 decimal places.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "GROUP BY",
+          "Window Functions (e.g., RANK, DENSE_RANK)",
+          "Self Join",
+          "Subqueries"
+        ],
+        "correct": 1,
+        "explanation": "Window functions allow performing calculations across a set of table rows related to the current row without collapsing them."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 2,
+        "explanation": "Window functions requiring an ORDER BY clause (like RANK) typically take O(N log N) due to sorting."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "The database needs to store partition state in memory, leading to O(N) space complexity."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT id, val,"
+        },
+        {
+          "id": "b",
+          "code": "RANK() OVER(PARTITION BY category ORDER BY val DESC) as rnk"
+        },
+        {
+          "id": "c",
+          "code": "FROM Data;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "RANK() OVER(ORDER BY val DESC PARTITION BY category)"
+        },
+        {
+          "id": "x2",
+          "code": "GROUP BY category"
+        },
+        {
+          "id": "x3",
+          "code": "LIMIT 1"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5018,
+    "title": "Employee Bonus",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to report the name and bonus amount of each employee with a bonus less than 1000.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5019,
+    "title": "Find Customer Referee",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to report the names of the customer that are not referred by the customer with id = 2.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Filtering with WHERE/HAVING",
+          "CROSS JOIN",
+          "Window Functions",
+          "Recursion"
+        ],
+        "correct": 0,
+        "explanation": "Proper filtering using WHERE or HAVING is the most direct approach for this logic."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 1,
+        "explanation": "A full table scan or index scan takes O(N) time to evaluate the predicate for each row."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Filtering processes rows individually, requiring O(1) auxiliary space."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT *"
+        },
+        {
+          "id": "b",
+          "code": "FROM TableName"
+        },
+        {
+          "id": "c",
+          "code": "WHERE status = 'active';"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "HAVING status = 'active'"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE status IS NULL"
+        },
+        {
+          "id": "x3",
+          "code": "FILTER (WHERE status = 'active')"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5020,
+    "title": "Customer Placing the Largest Number of Orders",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to find the customer_number for the customer who has placed the largest number of orders.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Window Functions",
+          "CROSS JOIN",
+          "GROUP BY with Aggregate Functions",
+          "ORDER BY"
+        ],
+        "correct": 2,
+        "explanation": "GROUP BY allows summarizing and aggregating data (like COUNT, SUM) per category."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(N log N)",
+          "O(1)",
+          "O(N^2)",
+          "O(N)"
+        ],
+        "correct": 3,
+        "explanation": "Hash aggregation operates in O(N) expected time by hashing the grouping keys."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Space is proportional to the number of distinct groups, bounded by O(N)."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT category, COUNT(*) as cnt"
+        },
+        {
+          "id": "b",
+          "code": "FROM Items"
+        },
+        {
+          "id": "c",
+          "code": "GROUP BY category;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "ORDER BY category"
+        },
+        {
+          "id": "x2",
+          "code": "PARTITION BY category"
+        },
+        {
+          "id": "x3",
+          "code": "HAVING COUNT(*) > 0"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5021,
+    "title": "Big Countries",
+    "difficulty": "Easy",
+    "description": "A country is big if it has an area of at least three million (i.e., 3000000 km2), or it has a population of at least twenty-five million (i.e., 25000000). Write an SQL query to report the name, population, and area of the big countries.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Filtering with WHERE/HAVING",
+          "CROSS JOIN",
+          "Window Functions",
+          "Recursion"
+        ],
+        "correct": 0,
+        "explanation": "Proper filtering using WHERE or HAVING is the most direct approach for this logic."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 1,
+        "explanation": "A full table scan or index scan takes O(N) time to evaluate the predicate for each row."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Filtering processes rows individually, requiring O(1) auxiliary space."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT *"
+        },
+        {
+          "id": "b",
+          "code": "FROM TableName"
+        },
+        {
+          "id": "c",
+          "code": "WHERE status = 'active';"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "HAVING status = 'active'"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE status IS NULL"
+        },
+        {
+          "id": "x3",
+          "code": "FILTER (WHERE status = 'active')"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5022,
+    "title": "Classes More Than 5 Students",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to report all the classes that have at least five students.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Window Functions",
+          "CROSS JOIN",
+          "GROUP BY with Aggregate Functions",
+          "ORDER BY"
+        ],
+        "correct": 2,
+        "explanation": "GROUP BY allows summarizing and aggregating data (like COUNT, SUM) per category."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(N log N)",
+          "O(1)",
+          "O(N^2)",
+          "O(N)"
+        ],
+        "correct": 3,
+        "explanation": "Hash aggregation operates in O(N) expected time by hashing the grouping keys."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Space is proportional to the number of distinct groups, bounded by O(N)."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT category, COUNT(*) as cnt"
+        },
+        {
+          "id": "b",
+          "code": "FROM Items"
+        },
+        {
+          "id": "c",
+          "code": "GROUP BY category;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "ORDER BY category"
+        },
+        {
+          "id": "x2",
+          "code": "PARTITION BY category"
+        },
+        {
+          "id": "x3",
+          "code": "HAVING COUNT(*) > 0"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5023,
+    "title": "Friend Requests I: Overall Acceptance Rate",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to find the overall acceptance rate of requests, which is the number of acceptance divided by the number of requests. Return the answer rounded to 2 decimals.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Window Functions",
+          "CROSS JOIN",
+          "GROUP BY with Aggregate Functions",
+          "ORDER BY"
+        ],
+        "correct": 2,
+        "explanation": "GROUP BY allows summarizing and aggregating data (like COUNT, SUM) per category."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(N log N)",
+          "O(1)",
+          "O(N^2)",
+          "O(N)"
+        ],
+        "correct": 3,
+        "explanation": "Hash aggregation operates in O(N) expected time by hashing the grouping keys."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Space is proportional to the number of distinct groups, bounded by O(N)."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT category, COUNT(*) as cnt"
+        },
+        {
+          "id": "b",
+          "code": "FROM Items"
+        },
+        {
+          "id": "c",
+          "code": "GROUP BY category;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "ORDER BY category"
+        },
+        {
+          "id": "x2",
+          "code": "PARTITION BY category"
+        },
+        {
+          "id": "x3",
+          "code": "HAVING COUNT(*) > 0"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5024,
+    "title": "Consecutive Available Seats",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to report all the consecutive available seats in the cinema.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5025,
+    "title": "Sales Person",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to report the names of all the salespersons who did not have any orders related to the company with the name 'RED'.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5026,
+    "title": "Tree Node",
+    "difficulty": "Medium",
+    "description": "Write an SQL query to report the type of each node in the tree. Each node in the tree can be one of three types: 'Root', 'Leaf', or 'Inner'.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Filtering with WHERE/HAVING",
+          "CROSS JOIN",
+          "Window Functions",
+          "Recursion"
+        ],
+        "correct": 0,
+        "explanation": "Proper filtering using WHERE or HAVING is the most direct approach for this logic."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 1,
+        "explanation": "A full table scan or index scan takes O(N) time to evaluate the predicate for each row."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Filtering processes rows individually, requiring O(1) auxiliary space."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT *"
+        },
+        {
+          "id": "b",
+          "code": "FROM TableName"
+        },
+        {
+          "id": "c",
+          "code": "WHERE status = 'active';"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "HAVING status = 'active'"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE status IS NULL"
+        },
+        {
+          "id": "x3",
+          "code": "FILTER (WHERE status = 'active')"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5027,
+    "title": "Triangle Judgement",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to report for every three line segments whether they can form a triangle.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Filtering with WHERE/HAVING",
+          "CROSS JOIN",
+          "Window Functions",
+          "Recursion"
+        ],
+        "correct": 0,
+        "explanation": "Proper filtering using WHERE or HAVING is the most direct approach for this logic."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 1,
+        "explanation": "A full table scan or index scan takes O(N) time to evaluate the predicate for each row."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Filtering processes rows individually, requiring O(1) auxiliary space."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT *"
+        },
+        {
+          "id": "b",
+          "code": "FROM TableName"
+        },
+        {
+          "id": "c",
+          "code": "WHERE status = 'active';"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "HAVING status = 'active'"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE status IS NULL"
+        },
+        {
+          "id": "x3",
+          "code": "FILTER (WHERE status = 'active')"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5028,
+    "title": "Shortest Distance in a Line",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to report the shortest distance between any two points from the Point table.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5029,
+    "title": "Shortest Distance in a Plane",
+    "difficulty": "Medium",
+    "description": "Write an SQL query to report the shortest distance between any two points from the Point2D table. Round the distance to two decimal points.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5030,
+    "title": "Investments in 2016",
+    "difficulty": "Medium",
+    "description": "Write an SQL query to report the sum of all total investment values in 2016 (tiv_2016), for all policyholders who have the same tiv_2015 value as one or more other policyholders, and are not located in the same city as any other policyholder.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "GROUP BY",
+          "Window Functions (e.g., RANK, DENSE_RANK)",
+          "Self Join",
+          "Subqueries"
+        ],
+        "correct": 1,
+        "explanation": "Window functions allow performing calculations across a set of table rows related to the current row without collapsing them."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 2,
+        "explanation": "Window functions requiring an ORDER BY clause (like RANK) typically take O(N log N) due to sorting."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "The database needs to store partition state in memory, leading to O(N) space complexity."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT id, val,"
+        },
+        {
+          "id": "b",
+          "code": "RANK() OVER(PARTITION BY category ORDER BY val DESC) as rnk"
+        },
+        {
+          "id": "c",
+          "code": "FROM Data;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "RANK() OVER(ORDER BY val DESC PARTITION BY category)"
+        },
+        {
+          "id": "x2",
+          "code": "GROUP BY category"
+        },
+        {
+          "id": "x3",
+          "code": "LIMIT 1"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5031,
+    "title": "Customer Who Visited but Did Not Make Any Transactions",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to find the IDs of the users who visited without making any transactions and the number of times they made these types of visits.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5032,
+    "title": "Bank Account Summary II",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to report the name and balance of users with a balance higher than 10000. The balance of an account is equal to the sum of the amounts of all transactions involving that account.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Window Functions",
+          "CROSS JOIN",
+          "GROUP BY with Aggregate Functions",
+          "ORDER BY"
+        ],
+        "correct": 2,
+        "explanation": "GROUP BY allows summarizing and aggregating data (like COUNT, SUM) per category."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(N log N)",
+          "O(1)",
+          "O(N^2)",
+          "O(N)"
+        ],
+        "correct": 3,
+        "explanation": "Hash aggregation operates in O(N) expected time by hashing the grouping keys."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Space is proportional to the number of distinct groups, bounded by O(N)."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT category, COUNT(*) as cnt"
+        },
+        {
+          "id": "b",
+          "code": "FROM Items"
+        },
+        {
+          "id": "c",
+          "code": "GROUP BY category;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "ORDER BY category"
+        },
+        {
+          "id": "x2",
+          "code": "PARTITION BY category"
+        },
+        {
+          "id": "x3",
+          "code": "HAVING COUNT(*) > 0"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5033,
+    "title": "Fix Names in a Table",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to fix the names so that only the first character is uppercase and the rest are lowercase. Return the result table ordered by user_id.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Filtering with WHERE/HAVING",
+          "CROSS JOIN",
+          "Window Functions",
+          "Recursion"
+        ],
+        "correct": 0,
+        "explanation": "Proper filtering using WHERE or HAVING is the most direct approach for this logic."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 1,
+        "explanation": "A full table scan or index scan takes O(N) time to evaluate the predicate for each row."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Filtering processes rows individually, requiring O(1) auxiliary space."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT *"
+        },
+        {
+          "id": "b",
+          "code": "FROM TableName"
+        },
+        {
+          "id": "c",
+          "code": "WHERE status = 'active';"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "HAVING status = 'active'"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE status IS NULL"
+        },
+        {
+          "id": "x3",
+          "code": "FILTER (WHERE status = 'active')"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5034,
+    "title": "Daily Leads and Partners",
+    "difficulty": "Easy",
+    "description": "Write an SQL query that will, for each date_id and make_name, return the number of distinct lead_id's and distinct partner_id's.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Window Functions",
+          "CROSS JOIN",
+          "GROUP BY with Aggregate Functions",
+          "ORDER BY"
+        ],
+        "correct": 2,
+        "explanation": "GROUP BY allows summarizing and aggregating data (like COUNT, SUM) per category."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(N log N)",
+          "O(1)",
+          "O(N^2)",
+          "O(N)"
+        ],
+        "correct": 3,
+        "explanation": "Hash aggregation operates in O(N) expected time by hashing the grouping keys."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Space is proportional to the number of distinct groups, bounded by O(N)."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT category, COUNT(*) as cnt"
+        },
+        {
+          "id": "b",
+          "code": "FROM Items"
+        },
+        {
+          "id": "c",
+          "code": "GROUP BY category;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "ORDER BY category"
+        },
+        {
+          "id": "x2",
+          "code": "PARTITION BY category"
+        },
+        {
+          "id": "x3",
+          "code": "HAVING COUNT(*) > 0"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5035,
+    "title": "Find Followers Count",
+    "difficulty": "Easy",
+    "description": "Write an SQL query that will, for each user, return the number of followers.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Window Functions",
+          "CROSS JOIN",
+          "GROUP BY with Aggregate Functions",
+          "ORDER BY"
+        ],
+        "correct": 2,
+        "explanation": "GROUP BY allows summarizing and aggregating data (like COUNT, SUM) per category."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(N log N)",
+          "O(1)",
+          "O(N^2)",
+          "O(N)"
+        ],
+        "correct": 3,
+        "explanation": "Hash aggregation operates in O(N) expected time by hashing the grouping keys."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Space is proportional to the number of distinct groups, bounded by O(N)."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT category, COUNT(*) as cnt"
+        },
+        {
+          "id": "b",
+          "code": "FROM Items"
+        },
+        {
+          "id": "c",
+          "code": "GROUP BY category;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "ORDER BY category"
+        },
+        {
+          "id": "x2",
+          "code": "PARTITION BY category"
+        },
+        {
+          "id": "x3",
+          "code": "HAVING COUNT(*) > 0"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5036,
+    "title": "Calculate Special Bonus",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to calculate the bonus of each employee. The bonus of an employee is 100% of their salary if the ID of the employee is an odd number and the employee's name does not start with the character 'M'. The bonus of an employee is 0 otherwise.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Filtering with WHERE/HAVING",
+          "CROSS JOIN",
+          "Window Functions",
+          "Recursion"
+        ],
+        "correct": 0,
+        "explanation": "Proper filtering using WHERE or HAVING is the most direct approach for this logic."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 1,
+        "explanation": "A full table scan or index scan takes O(N) time to evaluate the predicate for each row."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Filtering processes rows individually, requiring O(1) auxiliary space."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT *"
+        },
+        {
+          "id": "b",
+          "code": "FROM TableName"
+        },
+        {
+          "id": "c",
+          "code": "WHERE status = 'active';"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "HAVING status = 'active'"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE status IS NULL"
+        },
+        {
+          "id": "x3",
+          "code": "FILTER (WHERE status = 'active')"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5037,
+    "title": "The Latest Login in 2020",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to report the latest login for all users in the year 2020. Do not include the users who did not login in 2020.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Window Functions",
+          "CROSS JOIN",
+          "GROUP BY with Aggregate Functions",
+          "ORDER BY"
+        ],
+        "correct": 2,
+        "explanation": "GROUP BY allows summarizing and aggregating data (like COUNT, SUM) per category."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(N log N)",
+          "O(1)",
+          "O(N^2)",
+          "O(N)"
+        ],
+        "correct": 3,
+        "explanation": "Hash aggregation operates in O(N) expected time by hashing the grouping keys."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Space is proportional to the number of distinct groups, bounded by O(N)."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT category, COUNT(*) as cnt"
+        },
+        {
+          "id": "b",
+          "code": "FROM Items"
+        },
+        {
+          "id": "c",
+          "code": "GROUP BY category;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "ORDER BY category"
+        },
+        {
+          "id": "x2",
+          "code": "PARTITION BY category"
+        },
+        {
+          "id": "x3",
+          "code": "HAVING COUNT(*) > 0"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5038,
+    "title": "Employees With Missing Information",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to report the IDs of all the employees with missing information. The information of an employee is missing if the employee's name is missing, or the employee's salary is missing.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5039,
+    "title": "Rearrange Products Table",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to rearrange the Products table so that each row has (product_id, store, price). If a product is not available in a store, do not include a row with that product_id and store combination in the result table.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5040,
+    "title": "Capital Gain/Loss",
+    "difficulty": "Medium",
+    "description": "Write an SQL query to report the Capital gain/loss for each stock. The Capital gain/loss of a stock is the total gain or loss after buying and selling the stock one or many times.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Window Functions",
+          "CROSS JOIN",
+          "GROUP BY with Aggregate Functions",
+          "ORDER BY"
+        ],
+        "correct": 2,
+        "explanation": "GROUP BY allows summarizing and aggregating data (like COUNT, SUM) per category."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(N log N)",
+          "O(1)",
+          "O(N^2)",
+          "O(N)"
+        ],
+        "correct": 3,
+        "explanation": "Hash aggregation operates in O(N) expected time by hashing the grouping keys."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Space is proportional to the number of distinct groups, bounded by O(N)."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT category, COUNT(*) as cnt"
+        },
+        {
+          "id": "b",
+          "code": "FROM Items"
+        },
+        {
+          "id": "c",
+          "code": "GROUP BY category;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "ORDER BY category"
+        },
+        {
+          "id": "x2",
+          "code": "PARTITION BY category"
+        },
+        {
+          "id": "x3",
+          "code": "HAVING COUNT(*) > 0"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5041,
+    "title": "Top Travellers",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to report the distance traveled by each user. Return the result table ordered by travelled_distance in descending order, if two or more users traveled the same distance, order them by their name in ascending order.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5042,
+    "title": "Market Analysis I",
+    "difficulty": "Medium",
+    "description": "Write an SQL query to find for each user, the join date and the number of orders they made as a buyer in 2019.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5043,
+    "title": "Article Views I",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to find all the authors that viewed at least one of their own articles. Return the result table sorted by id in ascending order.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Filtering with WHERE/HAVING",
+          "CROSS JOIN",
+          "Window Functions",
+          "Recursion"
+        ],
+        "correct": 0,
+        "explanation": "Proper filtering using WHERE or HAVING is the most direct approach for this logic."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 1,
+        "explanation": "A full table scan or index scan takes O(N) time to evaluate the predicate for each row."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Filtering processes rows individually, requiring O(1) auxiliary space."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT *"
+        },
+        {
+          "id": "b",
+          "code": "FROM TableName"
+        },
+        {
+          "id": "c",
+          "code": "WHERE status = 'active';"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "HAVING status = 'active'"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE status IS NULL"
+        },
+        {
+          "id": "x3",
+          "code": "FILTER (WHERE status = 'active')"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5044,
+    "title": "Reformat Department Table",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to reformat the table such that there is a department id column and a revenue column for each month.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Window Functions",
+          "CROSS JOIN",
+          "GROUP BY with Aggregate Functions",
+          "ORDER BY"
+        ],
+        "correct": 2,
+        "explanation": "GROUP BY allows summarizing and aggregating data (like COUNT, SUM) per category."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(N log N)",
+          "O(1)",
+          "O(N^2)",
+          "O(N)"
+        ],
+        "correct": 3,
+        "explanation": "Hash aggregation operates in O(N) expected time by hashing the grouping keys."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Space is proportional to the number of distinct groups, bounded by O(N)."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT category, COUNT(*) as cnt"
+        },
+        {
+          "id": "b",
+          "code": "FROM Items"
+        },
+        {
+          "id": "c",
+          "code": "GROUP BY category;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "ORDER BY category"
+        },
+        {
+          "id": "x2",
+          "code": "PARTITION BY category"
+        },
+        {
+          "id": "x3",
+          "code": "HAVING COUNT(*) > 0"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5045,
+    "title": "Queries Quality and Percentage",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to find each query_name, the quality and poor_query_percentage. Both quality and poor_query_percentage should be rounded to 2 decimal places.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Window Functions",
+          "CROSS JOIN",
+          "GROUP BY with Aggregate Functions",
+          "ORDER BY"
+        ],
+        "correct": 2,
+        "explanation": "GROUP BY allows summarizing and aggregating data (like COUNT, SUM) per category."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(N log N)",
+          "O(1)",
+          "O(N^2)",
+          "O(N)"
+        ],
+        "correct": 3,
+        "explanation": "Hash aggregation operates in O(N) expected time by hashing the grouping keys."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Space is proportional to the number of distinct groups, bounded by O(N)."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT category, COUNT(*) as cnt"
+        },
+        {
+          "id": "b",
+          "code": "FROM Items"
+        },
+        {
+          "id": "c",
+          "code": "GROUP BY category;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "ORDER BY category"
+        },
+        {
+          "id": "x2",
+          "code": "PARTITION BY category"
+        },
+        {
+          "id": "x3",
+          "code": "HAVING COUNT(*) > 0"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5046,
+    "title": "Monthly Transactions I",
+    "difficulty": "Medium",
+    "description": "Write an SQL query to find for each month and country, the number of transactions and their total amount, the number of approved transactions and their total amount.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Window Functions",
+          "CROSS JOIN",
+          "GROUP BY with Aggregate Functions",
+          "ORDER BY"
+        ],
+        "correct": 2,
+        "explanation": "GROUP BY allows summarizing and aggregating data (like COUNT, SUM) per category."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(N log N)",
+          "O(1)",
+          "O(N^2)",
+          "O(N)"
+        ],
+        "correct": 3,
+        "explanation": "Hash aggregation operates in O(N) expected time by hashing the grouping keys."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Space is proportional to the number of distinct groups, bounded by O(N)."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT category, COUNT(*) as cnt"
+        },
+        {
+          "id": "b",
+          "code": "FROM Items"
+        },
+        {
+          "id": "c",
+          "code": "GROUP BY category;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "ORDER BY category"
+        },
+        {
+          "id": "x2",
+          "code": "PARTITION BY category"
+        },
+        {
+          "id": "x3",
+          "code": "HAVING COUNT(*) > 0"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5047,
+    "title": "Immediate Food Delivery I",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to find the percentage of immediate orders in the table, rounded to 2 decimal places. If the customer's preferred delivery date is the same as the order date, then the order is called immediate.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Filtering with WHERE/HAVING",
+          "CROSS JOIN",
+          "Window Functions",
+          "Recursion"
+        ],
+        "correct": 0,
+        "explanation": "Proper filtering using WHERE or HAVING is the most direct approach for this logic."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 1,
+        "explanation": "A full table scan or index scan takes O(N) time to evaluate the predicate for each row."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "Filtering processes rows individually, requiring O(1) auxiliary space."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT *"
+        },
+        {
+          "id": "b",
+          "code": "FROM TableName"
+        },
+        {
+          "id": "c",
+          "code": "WHERE status = 'active';"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "HAVING status = 'active'"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE status IS NULL"
+        },
+        {
+          "id": "x3",
+          "code": "FILTER (WHERE status = 'active')"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5048,
+    "title": "Immediate Food Delivery II",
+    "difficulty": "Medium",
+    "description": "Write an SQL query to find the percentage of immediate orders in the first orders of all customers, rounded to 2 decimal places.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "GROUP BY",
+          "Window Functions (e.g., RANK, DENSE_RANK)",
+          "Self Join",
+          "Subqueries"
+        ],
+        "correct": 1,
+        "explanation": "Window functions allow performing calculations across a set of table rows related to the current row without collapsing them."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N log N)",
+          "O(N^2)"
+        ],
+        "correct": 2,
+        "explanation": "Window functions requiring an ORDER BY clause (like RANK) typically take O(N log N) due to sorting."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(N)",
+          "O(1)",
+          "O(log N)",
+          "O(N^2)"
+        ],
+        "correct": 0,
+        "explanation": "The database needs to store partition state in memory, leading to O(N) space complexity."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT id, val,"
+        },
+        {
+          "id": "b",
+          "code": "RANK() OVER(PARTITION BY category ORDER BY val DESC) as rnk"
+        },
+        {
+          "id": "c",
+          "code": "FROM Data;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "RANK() OVER(ORDER BY val DESC PARTITION BY category)"
+        },
+        {
+          "id": "x2",
+          "code": "GROUP BY category"
+        },
+        {
+          "id": "x3",
+          "code": "LIMIT 1"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5049,
+    "title": "Managers with at Least 5 Direct Reports",
+    "difficulty": "Medium",
+    "description": "Write an SQL query to report the managers with at least five direct reports.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  },
+  {
+    "id": 5050,
+    "title": "Average Time of Process per Machine",
+    "difficulty": "Easy",
+    "description": "Write an SQL query to find the average time each machine takes to complete a process.",
+    "examples": [
+      {
+        "input": "| col1 | col2 |\n|------|------|\n| A    | 1    |\n| B    | 2    |",
+        "output": "| result |\n|--------|\n| A      |",
+        "explanation": "Based on the conditions, A matches the criteria."
+      }
+    ],
+    "constraints": [
+      "The tables could have up to 10^4 rows.",
+      "All identifiers are valid.",
+      "Dates are in 'YYYY-MM-DD' format."
+    ],
+    "mcq": [
+      {
+        "question": "What algorithm/technique should the best solution use?",
+        "options": [
+          "Subqueries only",
+          "INNER JOIN / LEFT JOIN",
+          "UNION ALL",
+          "Window Functions"
+        ],
+        "correct": 1,
+        "explanation": "JOINs are the most efficient way to combine data from multiple tables based on related columns."
+      },
+      {
+        "question": "What is the time complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N log N) or O(N)",
+          "O(N^2)",
+          "O(2^N)"
+        ],
+        "correct": 1,
+        "explanation": "Depending on indices, databases execute joins in O(N) with Hash Joins or O(N log N) with Merge Joins."
+      },
+      {
+        "question": "What is the space complexity of the best solution?",
+        "options": [
+          "O(1)",
+          "O(N)",
+          "O(N^2)",
+          "O(log N)"
+        ],
+        "correct": 1,
+        "explanation": "Hash joins typically require O(N) space to build the hash table for the smaller relation."
+      }
+    ],
+    "codePuzzle": {
+      "description": "Arrange the correct code blocks to form the solution. Beware \u2014 some lines are distractors!",
+      "blocks": [
+        {
+          "id": "a",
+          "code": "SELECT t1.id, t2.value"
+        },
+        {
+          "id": "b",
+          "code": "FROM Table1 t1"
+        },
+        {
+          "id": "c",
+          "code": "JOIN Table2 t2 ON t1.id = t2.t1_id;"
+        }
+      ],
+      "distractors": [
+        {
+          "id": "x1",
+          "code": "JOIN Table2 t2 ON t1.value = t2.value;"
+        },
+        {
+          "id": "x2",
+          "code": "WHERE t1.id = t2.t1_id"
+        },
+        {
+          "id": "x3",
+          "code": "CROSS JOIN Table2 t2"
+        }
+      ],
+      "correctOrder": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  }
+]

@@ -42,6 +42,16 @@ npm install
 npm run dev
 ```
 
+## Deployment
+
+This app is configured to automatically build and deploy to **GitHub Pages** on every push to the `main` branch via GitHub Actions.
+
+To enable GitHub Pages in your repository:
+1. Go to **Settings** > **Pages** in the GitHub repository.
+2. Under **Build and deployment** > **Source**, select **GitHub Actions**.
+
+The site will then be accessible at `https://<username>.github.io/<repository-name>/`.
+
 ## License
 
 [MIT](LICENSE)

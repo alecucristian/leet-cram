@@ -165,6 +165,26 @@ export default function App() {
   const [selectedPath, setSelectedPath] = useState<SkillPath | null>(null);
   const [questSourcePath, setQuestSourcePath] = useState<SkillPath | null>(null);
   const [globalMode, setGlobalMode] = useState<"classic" | "quest">("classic");
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+    window.addEventListener("beforeinstallprompt", handler);
+    window.addEventListener("appinstalled", () => setDeferredPrompt(null));
+    return () => window.removeEventListener("beforeinstallprompt", handler);
+  }, []);
+
+  const handleInstall = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const choice = await deferredPrompt.userChoice;
+    if (choice?.outcome === "accepted") {
+      setDeferredPrompt(null);
+    }
+  };
 
   // Load problems on mount: merge newly-shipped bundle with any saved/imported
   // problems by id. The bundle wins on conflicts so edits and new problems we
@@ -295,6 +315,25 @@ export default function App() {
             </span>
           </div>
           <div style={{ display: "flex", gap: 6 }}>
+            {deferredPrompt && (
+              <button
+                onClick={handleInstall}
+                style={{
+                  ...btnSmall,
+                  fontSize: "0.7rem",
+                  padding: "6px 10px",
+                  background: "#4ade8020",
+                  color: "#4ade80",
+                  border: "1px solid #4ade8050",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 4,
+                }}
+                title="Install LeetCram app"
+              >
+                ⬇ Install
+              </button>
+            )}
             <button onClick={() => setPage("prompt")} style={{ ...btnSmall, fontSize: "0.7rem", padding: "6px 10px" }}>Prompt</button>
             <button onClick={() => setShowImport(true)} style={{ ...btnSmall, fontSize: "0.7rem", padding: "6px 10px", background: "#f59e0b20", color: "#f59e0b", border: "1px solid #f59e0b40" }}>+ Import</button>
           </div>

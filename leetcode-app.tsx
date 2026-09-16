@@ -3,6 +3,7 @@ import BUNDLED_PROBLEMS from "./problems";
 import type { Problem, UserProgress, PageType, ClassicPhase } from "./src/types";
 import type { SkillPath } from "./src/types";
 import { loadProgress, saveProgress, markClassicComplete, markQuestComplete, markSkillPathComplete } from "./src/progress";
+import { checkForPwaUpdate, applyPwaUpdate } from "./src/pwa";
 import { Modal, Icons, btnPrimary, btnSmall } from "./src/components/ui";
 import { ProblemView, MCQPhase, CodePuzzle } from "./src/components/ClassicMode";
 import { QuestMode } from "./src/components/QuestMode";
@@ -166,6 +167,33 @@ export default function App() {
   const [questSourcePath, setQuestSourcePath] = useState<SkillPath | null>(null);
   const [globalMode, setGlobalMode] = useState<"classic" | "quest">("classic");
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [updateAvailable, setUpdateAvailable] = useState(false);
+  const [checkingUpdate, setCheckingUpdate] = useState(false);
+  const [updateMessage, setUpdateMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handler = () => setUpdateAvailable(true);
+    window.addEventListener("pwa-update-available", handler);
+    return () => window.removeEventListener("pwa-update-available", handler);
+  }, []);
+
+  const handleCheckUpdates = async () => {
+    setCheckingUpdate(true);
+    try {
+      const isNew = await checkForPwaUpdate();
+      if (isNew) {
+        setUpdateAvailable(true);
+      } else {
+        setUpdateMessage("LeetCram is up to date!");
+        setTimeout(() => setUpdateMessage(null), 3000);
+      }
+    } catch {
+      setUpdateMessage("Offline — couldn't check updates");
+      setTimeout(() => setUpdateMessage(null), 3000);
+    } finally {
+      setCheckingUpdate(false);
+    }
+  };
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -186,20 +214,22 @@ export default function App() {
     }
   };
 
-  // Load problems on mount: merge newly-shipped bundle with any saved/imported
-  // problems by id. The bundle wins on conflicts so edits and new problems we
-  // ship always reach existing sessions; localStorage only contributes extras
-  // (e.g. user-imported problems whose ids aren't in the bundle).
+  // Load problems on mount: newly-shipped bundle always takes priority so edits,
+  // fixes, and new problems reach existing sessions immediately.
+  // localStorage only preserves custom user-imported problems not present in the bundle.
   useEffect(() => {
     try {
-      const byId = new Map<number, Problem>();
+      const bundledIds = new Set(BUNDLED_PROBLEMS.map((p) => p.id));
       const saved = localStorage.getItem("leetdrill-problems");
+      let userCustom: Problem[] = [];
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) for (const p of parsed as Problem[]) byId.set(p.id, p);
+        if (Array.isArray(parsed)) {
+          userCustom = (parsed as Problem[]).filter((p) => !bundledIds.has(p.id));
+        }
       }
-      for (const p of BUNDLED_PROBLEMS) byId.set(p.id, p);
-      setProblems([...byId.values()].sort((a, b) => a.id - b.id));
+      const merged = [...BUNDLED_PROBLEMS, ...userCustom].sort((a, b) => a.id - b.id);
+      setProblems(merged);
     } catch { /* silent */ }
     setLoaded(true);
   }, []);
@@ -334,10 +364,106 @@ export default function App() {
                 ⬇ Install
               </button>
             )}
+            <button
+              onClick={handleCheckUpdates}
+              disabled={checkingUpdate}
+              style={{
+                ...btnSmall,
+                fontSize: "0.7rem",
+                padding: "6px 9px",
+                background: updateAvailable ? "#4ade8020" : "transparent",
+                color: updateAvailable ? "#4ade80" : "#94a3b8",
+                border: updateAvailable ? "1px solid #4ade8060" : "1px solid #334155",
+                display: "flex",
+                alignItems: "center",
+                gap: 4,
+              }}
+              title="Check for PWA updates"
+            >
+              {checkingUpdate ? "..." : updateAvailable ? "↻ Update" : "↻"}
+            </button>
             <button onClick={() => setPage("prompt")} style={{ ...btnSmall, fontSize: "0.7rem", padding: "6px 10px" }}>Prompt</button>
             <button onClick={() => setShowImport(true)} style={{ ...btnSmall, fontSize: "0.7rem", padding: "6px 10px", background: "#f59e0b20", color: "#f59e0b", border: "1px solid #f59e0b40" }}>+ Import</button>
           </div>
         </div>
+
+        {/* Update Notification Banner */}
+        {updateAvailable && (
+          <div
+            style={{
+              background: "linear-gradient(135deg, rgba(30, 41, 59, 0.98) 0%, rgba(15, 23, 42, 0.98) 100%)",
+              border: "1px solid #4ade8070",
+              borderRadius: 10,
+              padding: "10px 14px",
+              marginBottom: 16,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              boxShadow: "0 4px 16px rgba(74, 222, 128, 0.15)",
+              fontSize: "0.82rem",
+              color: "#f1f5f9",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span style={{ fontSize: "1.15rem" }}>✨</span>
+              <span>
+                <strong>Update available!</strong> New problems and improvements are ready.
+              </span>
+            </div>
+            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+              <button
+                onClick={applyPwaUpdate}
+                style={{
+                  background: "#4ade80",
+                  color: "#052e16",
+                  border: "none",
+                  borderRadius: 6,
+                  fontWeight: 700,
+                  padding: "5px 12px",
+                  cursor: "pointer",
+                  fontSize: "0.78rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 4,
+                }}
+              >
+                ↻ Update Now
+              </button>
+              <button
+                onClick={() => setUpdateAvailable(false)}
+                style={{
+                  background: "transparent",
+                  color: "#94a3b8",
+                  border: "none",
+                  fontSize: "1rem",
+                  cursor: "pointer",
+                  padding: "0 4px",
+                }}
+                title="Dismiss"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Update feedback toast */}
+        {updateMessage && (
+          <div
+            style={{
+              background: "#1e293b",
+              border: "1px solid #334155",
+              borderRadius: 8,
+              padding: "6px 12px",
+              marginBottom: 14,
+              fontSize: "0.78rem",
+              color: "#94a3b8",
+              textAlign: "center",
+            }}
+          >
+            {updateMessage}
+          </div>
+        )}
 
         {/* Pages */}
         {page === "prompt" && <PromptPage onBack={goHome} />}

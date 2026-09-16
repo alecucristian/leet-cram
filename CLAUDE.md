@@ -11,7 +11,7 @@ LeetCram is a LeetCode practice app built as a single-file React+TypeScript comp
 The entire app lives in `leetcode-app.tsx` — a self-contained React component using Vite as the build tool. It uses inline styles (no CSS files).
 
 ### Key structure within the file:
-- **Problem data** — 88 problems loaded from `leetcode_problems.json`
+- **Problem data** — Problems loaded from the `problems/` folder (`problems/leetcode_problems.json` and `problems/leetcode_sql_problems.json`) aggregated via `problems/index.ts`
 - **PROMPT_TEMPLATE** — LLM prompt template for generating new problems in the app's JSON format
 - **Component hierarchy**: `App` (root) → `ProblemView` (read phase) → `MCQPhase` (quiz) → `CodePuzzle` (drag-and-drop puzzle)
 - **ImportModal** — allows importing new problems via JSON file upload

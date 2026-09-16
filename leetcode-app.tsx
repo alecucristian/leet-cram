@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, type ChangeEvent } from "react";
-import SAMPLE_PROBLEMS from "./leetcode_problems.json";
+import BUNDLED_PROBLEMS from "./problems";
 import type { Problem, UserProgress, PageType, ClassicPhase } from "./src/types";
 import type { SkillPath } from "./src/types";
 import { loadProgress, saveProgress, markClassicComplete, markQuestComplete, markSkillPathComplete } from "./src/progress";
@@ -154,7 +154,7 @@ function PromptPage({ onBack }: { onBack: () => void }) {
 // --- MAIN APP ---
 export default function App() {
   const { isMobile, isDesktop } = useBreakpoint();
-  const [problems, setProblems] = useState<Problem[]>(SAMPLE_PROBLEMS as Problem[]);
+  const [problems, setProblems] = useState<Problem[]>(BUNDLED_PROBLEMS);
   const [page, setPage] = useState<PageType>("home");
   const [selectedProblem, setSelectedProblem] = useState<Problem | null>(null);
   const [classicPhase, setClassicPhase] = useState<ClassicPhase>("read");
@@ -178,7 +178,7 @@ export default function App() {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) for (const p of parsed as Problem[]) byId.set(p.id, p);
       }
-      for (const p of SAMPLE_PROBLEMS as Problem[]) byId.set(p.id, p);
+      for (const p of BUNDLED_PROBLEMS) byId.set(p.id, p);
       setProblems([...byId.values()].sort((a, b) => a.id - b.id));
     } catch { /* silent */ }
     setLoaded(true);
@@ -207,7 +207,7 @@ export default function App() {
   };
 
   const handleReset = () => {
-    setProblems(SAMPLE_PROBLEMS as Problem[]);
+    setProblems(BUNDLED_PROBLEMS);
     try { localStorage.removeItem("leetdrill-problems"); } catch { /* silent */ }
   };
 
@@ -289,7 +289,7 @@ export default function App() {
         {/* Header */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20, paddingBottom: 14, borderBottom: "1px solid #1e293b" }}>
           <div onClick={goHome} style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: 8 }}>
-            <img src="/logo.png" alt="LeetCram" style={{ width: isMobile ? 36 : 44, height: isMobile ? 36 : 44, objectFit: "contain" }} />
+            <img src="./logo.png" alt="LeetCram" style={{ width: isMobile ? 36 : 44, height: isMobile ? 36 : 44, objectFit: "contain" }} />
             <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: isMobile ? "1.05rem" : "1.3rem", color: "#f1f5f9" }}>
               Leet<span style={{ color: "#4ade80" }}>Cram</span>
             </span>
